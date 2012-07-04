@@ -15,7 +15,7 @@ class programa(QMainWindow, Ui_albaran):
     def __init__(self, parent = None ):
         QWidget.__init__(self, parent)
         self.setupUi(self)
-        self.setWindowTitle("Albaran v02")
+        self.setWindowTitle("Albaran v02 alpha")
         # linkando interfaz con funciones:
         #self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
