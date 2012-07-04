@@ -61,18 +61,18 @@ class programa(QMainWindow, Ui_albaran):
         return self.total_items
     
     def agregarCliente(self): #FUNCIONANDO   #####MODIFICADAD PARA ABRIR ARCHIVO, ACTUALIZARLO O ANADIR CLIENTE
-        client1 = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
+        ocliente = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
         # w:
         clidb = shelve.open("clientes.db")
-        clidb[str(client1.getNombre())] = client1
+        clidb[str(ocliente.getNombre())] = ocliente
         
         # r:
         clidb = shelve.open("clientes.db")
-        print clidb[str(client1.getNombre())]
+        print clidb[str(ocliente.getNombre())]
         
         clidb.close()
         #actualizamos combobox cliente: 
-        self.updateComboC(client1.getNombre())
+        self.updateComboC(ocliente.getNombre())
 
     def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
         item1 = item()
@@ -100,15 +100,15 @@ class programa(QMainWindow, Ui_albaran):
     
     def loadCliente(self): #NO FUNCIONANDO
         clidb = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
-        cn = str(self.namec.text())
+        cn = str(self.boxclient.currentText()) # recuperamos el nombre del susodicho
         
-        c = clidb[ str(cn) ]   # estamos creando un objetos llamado client1 recuperado de la database
-        
+        c = clidb[ str(cn) ]   # estamos creando un objetos llamado ocliente recuperado de la database
+        print str(c.getNombre())
         # seteo desde el objeto recuperado de la base de datos:
-        self.cliente.setText(c.getNombre)
-        self.nif.setText(c.getNif)
-        self.poblacion.setText(c.getPoblacion)
-        self.calle.setText(c.getCalle)
+        self.namec.setText(str(c.getNombre()))
+        self.nif.setText(c.getNif())
+        self.poblacion.setText(c.getPoblacion())
+        self.calle.setText(c.getCalle())
         
         clidb.close()
     
