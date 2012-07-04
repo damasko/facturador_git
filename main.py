@@ -20,19 +20,20 @@ class programa(QMainWindow, Ui_albaran):
         #self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
-    
-        # # Actualizar nf desplegable:
+        self.connect(self.rmclienteB, SIGNAL("clicked()"),self.eliminarCliente)
+        
+        # # Actualizar combobox cliente:
         self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco            
         
     def updateComboC(self, nombrec):
         # # Actualizar desplegable Cliente:
         self.boxclient.clear() # limpiamos combobox clietnes
-        clidb = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
-        self.boxclient.addItems(sorted(clidb.keys())) # rellenamos con todos los clientes
+        clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
+        self.boxclient.addItems(sorted(clientes_db.keys())) # rellenamos con todos los clientes
         index = self.boxclient.findText(str(nombrec))# busco el nf para obtener el index
         self.boxclient.setCurrentIndex(index) # seteo por index
-        clidb.close() # cerramos
+        clientes_db.close() # cerramos
 
     def agregarItem(self,  cantidad,  precio,  nombre): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
         item1 = item(cantidad,  precio,  nombre)
@@ -63,16 +64,36 @@ class programa(QMainWindow, Ui_albaran):
     def agregarCliente(self): #FUNCIONANDO   #####MODIFICADAD PARA ABRIR ARCHIVO, ACTUALIZARLO O ANADIR CLIENTE
         ocliente = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
         # w:
-        clidb = shelve.open("clientes.db")
-        clidb[str(ocliente.getNombre())] = ocliente
+        clientes_db = shelve.open("clientes.db")
+        clientes_db[str(ocliente.getNombre())] = ocliente
         
         # r:
-        clidb = shelve.open("clientes.db")
-        print clidb[str(ocliente.getNombre())]
+        clientes_db = shelve.open("clientes.db")
+        print clientes_db[str(ocliente.getNombre())]
         
-        clidb.close()
+        clientes_db.close()
         #actualizamos combobox cliente: 
         self.updateComboC(ocliente.getNombre())
+        
+    def eliminarCliente(self):
+		current = self.boxclient.currentText()
+		clientes_db = shelve.open("clientes.db")
+		#c = clientes_db[str(current)]
+
+		del clientes_db[str(current)]
+		
+		self.boxclient.setCurrentIndex(-1)
+		self.namec.setText("")
+		self.nif.setText("")
+		self.poblacion.setText("")
+		self.calle.setText("")
+
+		clientes_db.close()
+
+		# # Actualizar combobox cliente:
+		self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
+		self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco            
+        
 
     def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
         item1 = item()
@@ -98,19 +119,19 @@ class programa(QMainWindow, Ui_albaran):
     #Carga de clientes sobrecargada con valores puestos por el usuario
     #No existe sobrecarga! D:
     
-    def loadCliente(self): #NO FUNCIONANDO
-        clidb = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
+    def loadCliente(self): #FUNCIONANDO
+        clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
         cn = str(self.boxclient.currentText()) # recuperamos el nombre del susodicho
         
-        c = clidb[ str(cn) ]   # estamos creando un objetos llamado ocliente recuperado de la database
-        print str(c.getNombre())
+        c = clientes_db[ str(cn) ]   # estamos creando un objetos llamado ocliente recuperado de la database
+        #print str(c.getNombre())
         # seteo desde el objeto recuperado de la base de datos:
         self.namec.setText(str(c.getNombre()))
         self.nif.setText(c.getNif())
         self.poblacion.setText(c.getPoblacion())
         self.calle.setText(c.getCalle())
         
-        clidb.close()
+        clientes_db.close()
     
      ### Funciones de calculo de importe, etc
         
@@ -128,10 +149,9 @@ class programa(QMainWindow, Ui_albaran):
         
 
 
-#MAIN
+# MAIN
 if __name__ == "__main__":
         app = QApplication(sys.argv)
         window = programa()
         window.show()
         sys.exit(app.exec_())
-
