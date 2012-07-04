@@ -8,3 +8,6 @@ http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
 Dependencias en windows 64bits:
 http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/PyQt-Py2.7-x64-gpl-4.9.1-1.exe
 http://www.python.org/ftp/python/2.7.3/python-2.7.3.amd64.msi
+
+Dependencias en *ubuntu:
+sudo apt-get install pyqt4-dev-tools 
