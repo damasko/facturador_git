@@ -72,8 +72,8 @@ class programa(QMainWindow, Ui_albaran):
         clientes_db[str(ocliente.getNombre())] = ocliente
         
         # r:
-        clientes_db = shelve.open("clientes.db")
-        print clientes_db[str(ocliente.getNombre())]
+        #clientes_db = shelve.open("clientes.db")
+        #print clientes_db[str(ocliente.getNombre())]
         
         clientes_db.close()
         #actualizamos combobox cliente: 
