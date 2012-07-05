@@ -16,6 +16,7 @@ class programa(QMainWindow, Ui_albaran):
         QWidget.__init__(self, parent)
         self.setupUi(self)
         self.setWindowTitle("Albaran v02 alpha")
+        
         # linkando interfaz con funciones:
         #self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
@@ -26,6 +27,9 @@ class programa(QMainWindow, Ui_albaran):
         self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco            
         
+        # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
+        all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
+        
     def updateComboC(self, nombrec):
         # # Actualizar desplegable Cliente:
         self.boxclient.clear() # limpiamos combobox clietnes
@@ -34,7 +38,7 @@ class programa(QMainWindow, Ui_albaran):
         index = self.boxclient.findText(str(nombrec))# busco el nf para obtener el index
         self.boxclient.setCurrentIndex(index) # seteo por index
         clientes_db.close() # cerramos
-
+    
     def agregarItem(self,  cantidad,  precio,  nombre): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
         item1 = item(cantidad,  precio,  nombre)
         if not self.total_items:

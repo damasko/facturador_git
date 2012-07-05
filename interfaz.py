@@ -8,6 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+from completion import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -16,7 +17,7 @@ except AttributeError:
 
 class Ui_albaran(object):
     def setupUi(self, albaran):
-        albaran.setObjectName(_fromUtf8("albaran"))
+        albaran.setObjectName(_fromUtf8("albaran"))	
         albaran.setWindowModality(QtCore.Qt.NonModal)
         albaran.resize(821, 604)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
@@ -215,7 +216,7 @@ class Ui_albaran(object):
         self.boxclient.setMinimumSize(QtCore.QSize(200, 0))
         self.boxclient.setObjectName(_fromUtf8("boxclient"))
         self.horizontalLayout.addWidget(self.boxclient)
-        self.namec = QtGui.QLineEdit(self.gridLayoutWidget_2)
+        self.namec = miQLineEdit(self.gridLayoutWidget_2)
         self.namec.setObjectName(_fromUtf8("namec"))
         self.horizontalLayout.addWidget(self.namec)
         self.addclienteB = QtGui.QPushButton(self.gridLayoutWidget_2)
