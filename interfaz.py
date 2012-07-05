@@ -17,7 +17,7 @@ except AttributeError:
 
 class Ui_albaran(object):
     def setupUi(self, albaran):
-        albaran.setObjectName(_fromUtf8("albaran"))	
+        albaran.setObjectName(_fromUtf8("albaran"))
         albaran.setWindowModality(QtCore.Qt.NonModal)
         albaran.resize(821, 604)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
