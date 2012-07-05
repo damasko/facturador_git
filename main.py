@@ -5,7 +5,6 @@ from interfaz import Ui_albaran
 from factura import *
 from cliente import *
 from item import  *
-from update_db_completion import *
 
 class programa(QMainWindow, Ui_albaran):
     total_facturas = []
