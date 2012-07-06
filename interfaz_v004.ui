@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>844</width>
-    <height>667</height>
+    <width>823</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -408,6 +408,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="rm_cliente">
+         <property name="text">
+          <string>Eliminar Cliente</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item row="1" column="0" alignment="Qt::AlignHCenter">
@@ -470,7 +477,7 @@
       <x>20</x>
       <y>280</y>
       <width>781</width>
-      <height>163</height>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -654,7 +661,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>560</y>
+      <y>400</y>
       <width>781</width>
       <height>20</height>
      </rect>

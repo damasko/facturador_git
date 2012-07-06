@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v004.ui'
 #
-# Created: Fri Jul  6 03:33:13 2012
+# Created: Fri Jul  6 14:33:26 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,7 +19,7 @@ class Ui_albaran(object):
     def setupUi(self, albaran):
         albaran.setObjectName(_fromUtf8("albaran"))
         albaran.setWindowModality(QtCore.Qt.NonModal)
-        albaran.resize(844, 667)
+        albaran.resize(823, 651)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -219,6 +219,9 @@ class Ui_albaran(object):
         self.addclienteB = QtGui.QPushButton(self.gridLayoutWidget_2)
         self.addclienteB.setObjectName(_fromUtf8("addclienteB"))
         self.horizontalLayout.addWidget(self.addclienteB)
+        self.rm_cliente = QtGui.QPushButton(self.gridLayoutWidget_2)
+        self.rm_cliente.setObjectName(_fromUtf8("rm_cliente"))
+        self.horizontalLayout.addWidget(self.rm_cliente)
         self.gridLayout_3.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.label_3 = QtGui.QLabel(self.gridLayoutWidget_2)
         font = QtGui.QFont()
@@ -254,7 +257,7 @@ class Ui_albaran(object):
         self.horizontalLayout_5.addWidget(self.pago)
         self.gridLayout_3.addLayout(self.horizontalLayout_5, 4, 0, 1, 1)
         self.gridLayoutWidget_3 = QtGui.QWidget(self.centralwidget)
-        self.gridLayoutWidget_3.setGeometry(QtCore.QRect(20, 280, 781, 163))
+        self.gridLayoutWidget_3.setGeometry(QtCore.QRect(20, 280, 781, 121))
         self.gridLayoutWidget_3.setObjectName(_fromUtf8("gridLayoutWidget_3"))
         self.gridLayout_4 = QtGui.QGridLayout(self.gridLayoutWidget_3)
         self.gridLayout_4.setMargin(0)
@@ -342,7 +345,7 @@ class Ui_albaran(object):
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
         self.line.setObjectName(_fromUtf8("line"))
         self.line_3 = QtGui.QFrame(self.centralwidget)
-        self.line_3.setGeometry(QtCore.QRect(20, 560, 781, 20))
+        self.line_3.setGeometry(QtCore.QRect(20, 400, 781, 20))
         self.line_3.setFrameShape(QtGui.QFrame.HLine)
         self.line_3.setFrameShadow(QtGui.QFrame.Sunken)
         self.line_3.setObjectName(_fromUtf8("line_3"))
@@ -373,6 +376,7 @@ class Ui_albaran(object):
         self.poblacionl.setText(QtGui.QApplication.translate("albaran", "Poblacion:", None, QtGui.QApplication.UnicodeUTF8))
         self.clil.setText(QtGui.QApplication.translate("albaran", "Cliente:", None, QtGui.QApplication.UnicodeUTF8))
         self.addclienteB.setText(QtGui.QApplication.translate("albaran", "Crear/Actualizar Cliente", None, QtGui.QApplication.UnicodeUTF8))
+        self.rm_cliente.setText(QtGui.QApplication.translate("albaran", "Eliminar Cliente", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("albaran", "Datos del cliente", None, QtGui.QApplication.UnicodeUTF8))
         self.callel.setText(QtGui.QApplication.translate("albaran", "Calle:", None, QtGui.QApplication.UnicodeUTF8))
         self.pagol.setText(QtGui.QApplication.translate("albaran", "Pago:", None, QtGui.QApplication.UnicodeUTF8))
