@@ -8,26 +8,23 @@ class miQLineEdit(QLineEdit):
         super(miQLineEdit, self).__init__(parent)
         #QLineEdit.__init__(self, parent)
 
-    #completion_items = ["hello","world"]
-    #print str(type(completion_items))
-    #for i in completion_items:
-    #   print i
-
     def keyPressEvent(self, event):
         # cada vez que queremos consultar actualizamos el listado:
         self.completion_items = completion_items()
-
+        
         # por alguna razon con qtdesigner el tab esta reservado para cambiar de posicion y no consigo
         # asignarlo para completion en un entrytext:
         #if event.key() == Qt.Key_Tab:
 
         # combinacion de ctrl + space:
         if event.key() == Qt.Key_Space and event.modifiers() == Qt.ControlModifier:
-            for x in range( len(self.completion_items) ): #<-- he tenido que iterar por que startswith es un atributo de los literales no de las listas, y le esta llegando una lista...
-                for item in self.completion_items[x]:
-                    if item.startswith(self.text()):
-                        self.setText(item)
-                        break
-                event.accept()
+            fin_bucle = False
+            iterador = 0
+            while not fin_bucle or iterador < len(self.completion_items):
+                if self.completion_items[iterador].startswith(self.text()):
+                    self.setText(self.completion_items[iterador])
+                    fin_bucle = True
+                iterador += 1
+            event.accept()
         else:
             QLineEdit.keyPressEvent(self, event)
