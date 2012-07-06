@@ -60,7 +60,7 @@ class programa(QMainWindow, Ui_albaran):
         item_db.close() # cerramos
 
     def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
-        item1 = item(self.newti.text(), self.npre.text())
+        item1 = item(self.newti.text(), self.precio_item.text())
         # w:
         item_db = shelve.open("items.db")
         item_db[str(item1.getTipo())] = item1
@@ -105,8 +105,8 @@ class programa(QMainWindow, Ui_albaran):
         
         item_db = shelve.open("items.db") # abrimos bases de datos en el caso de que exist
         it = item_db[str(self.boxitems.currentText()) ]
-        self.precio.setText(it.getPrecio())
-        
+        self.precio_item.setText(it.getPrecio())
+        self.newti.setText(it.getTipo())
         item_db.close()
 
     def eliminarItem(self):
@@ -118,7 +118,7 @@ class programa(QMainWindow, Ui_albaran):
         del items_db[str(current)]
 
         self.boxitems.setCurrentIndex(-1)
-        self.precio.setText("")
+        self.precio_item.setText("")
 
         items_db.close()
 
