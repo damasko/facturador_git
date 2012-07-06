@@ -15,13 +15,16 @@ class programa(QMainWindow, Ui_albaran):
     def __init__(self, parent = None ):
         QWidget.__init__(self, parent)
         self.setupUi(self)
-        self.setWindowTitle("Albaran v02")
+        self.setWindowTitle("Albaran v02 alpha")
         # linkando interfaz con funciones:
         self.connect(self.boxitems, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
-    
+
+        # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
+        #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
+ 
         # # Actualizar nf desplegable clientes:
         self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco            
@@ -40,60 +43,60 @@ class programa(QMainWindow, Ui_albaran):
     def updateComboC(self, nombrec):
         # # Actualizar desplegable Cliente:
         self.boxclient.clear() # limpiamos combobox clietnes
-        clidb = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
-        self.boxclient.addItems(sorted(clidb.keys())) # rellenamos con todos los clientes
+        clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exista
+        self.boxclient.addItems(sorted(clientes_db.keys())) # rellenamos con todos los clientes
         index = self.boxclient.findText(str(nombrec))# busco el nf para obtener el index
         self.boxclient.setCurrentIndex(index) # seteo por index
-        clidb.close() # cerramos
+        clientes_db.close() # cerramos
 
     def updateComboI(self,  tipoi):
         self.boxitems.clear() # limpiamos combobox clietnes
-        itdb = shelve.open("items.db") # abrimos bases de datos en el caso de que exista
-        self.boxitems.addItems(sorted(itdb.keys())) # rellenamos con todos los clientes
+        item_db = shelve.open("items.db") # abrimos bases de datos en el caso de que exista
+        self.boxitems.addItems(sorted(item_db.keys())) # rellenamos con todos los clientes
         index = self.boxitems.findText(str(tipoi))# busco el nf para obtener el index
         self.boxitems.setCurrentIndex(index) # seteo por index
-        itdb.close() # cerramos
+        item_db.close() # cerramos
 
     def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
         item1 = item(self.newti.text(), self.npre.text())
         # w:
-        itdb = shelve.open("items.db")
-        itdb[str(item1.getTipo())] = item1
+        item_db = shelve.open("items.db")
+        item_db[str(item1.getTipo())] = item1
         
-        itdb.close()
+        item_db.close()
         #actualizamos combobox cliente: 
         self.updateComboI(item1.getTipo())
     
     def agregarCliente(self): #FUNCIONANDO   #####MODIFICADAD PARA ABRIR ARCHIVO, ACTUALIZARLO O ANADIR CLIENTE
-        client1 = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
+        ocliente = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
         # w:
-        clidb = shelve.open("clientes.db")
-        clidb[str(client1.getNombre())] = client1
+        clientes_db = shelve.open("clientes.db")
+        clientes_db[str(ocliente.getNombre())] = ocliente
         
 
         
-        clidb.close()
+        clientes_db.close()
         #actualizamos combobox cliente: 
-        self.updateComboC(client1.getNombre())
+        self.updateComboC(ocliente.getNombre())
 
     def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
         
-        itdb = shelve.open("items.db") # abrimos bases de datos en el caso de que exist
-        it = itdb[str(self.boxitems.currentText()) ]
+        item_db = shelve.open("items.db") # abrimos bases de datos en el caso de que exist
+        it = item_db[str(self.boxitems.currentText()) ]
         self.precio.setText(it.getPrecio())
         
-        itdb.close()
+        item_db.close()
 
     
     def loadCliente(self): #NO FUNCIONANDO
-        clidb = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exist
-        c = clidb[str(self.boxclient.currentText()) ]#  Falra 1 paso se ahorra una variable: estamos creando un objetos llamado client1 recuperado de la database Esto es lo  que contiene el combo cuando el user lo ha seleccionado: self.boxclient.currentText())# seteo desde el objeto recuperado de la base de datos:
+        clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exist
+        c = clientes_db[str(self.boxclient.currentText()) ]#  Falra 1 paso se ahorra una variable: estamos creando un objetos llamado ocliente recuperado de la database Esto es lo  que contiene el combo cuando el user lo ha seleccionado: self.boxclient.currentText())# seteo desde el objeto recuperado de la base de datos:
         self.namec.setText(c.getNombre())
         self.nif.setText(c.getNif())
         self.poblacion.setText(c.getPoblacion())
         self.calle.setText(c.getCalle())
         
-        clidb.close()
+        clientes_db.close()
     
      ### Funciones de calculo de importe, etc
         
