@@ -23,6 +23,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
         self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
+        self.connect(self.agregarit, SIGNAL("clicked()"),self.volcarItems)
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
         #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
@@ -59,16 +60,6 @@ class programa(QMainWindow, Ui_albaran):
         self.boxitems.setCurrentIndex(index) # seteo por index
         item_db.close() # cerramos
 
-    def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
-        item1 = item(self.newti.text(), self.precio_item.text())
-        # w:
-        item_db = shelve.open("items.db")
-        item_db[str(item1.getTipo())] = item1
-        
-        item_db.close()
-        #actualizamos combobox cliente: 
-        self.updateComboI(item1.getTipo())
-    
     def agregarCliente(self): #FUNCIONANDO   #####MODIFICADAD PARA ABRIR ARCHIVO, ACTUALIZARLO O ANADIR CLIENTE
         ocliente = cliente(self.namec.text(), self.nif.text(), self.poblacion.text(), self.calle.text(),  self.nf.text())
         # w:
@@ -101,6 +92,16 @@ class programa(QMainWindow, Ui_albaran):
         self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
 
+    def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
+        item1 = item(self.newti.text(), self.precio_item.text())
+        # w:
+        item_db = shelve.open("items.db")
+        item_db[str(item1.getTipo())] = item1
+        
+        item_db.close()
+        #actualizamos combobox cliente: 
+        self.updateComboI(item1.getTipo())
+
     def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
         
         item_db = shelve.open("items.db") # abrimos bases de datos en el caso de que exist
@@ -125,6 +126,10 @@ class programa(QMainWindow, Ui_albaran):
         # # Actualizar combobox cliente:
         self.updateComboI("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxitems.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
+        
+    def volcarItems(self,  total_items):
+        pass
+        
     
     def loadCliente(self): #NO FUNCIONANDO
         clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exist
