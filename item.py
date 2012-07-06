@@ -1,9 +1,7 @@
 class item(object):
-    def __init__(self, __cantidad, __tipo, __precio,  __nf):
-        self.__cantidad = __cantidad
+    def __init__(self, __tipo, __precio): #Se ha eliminado __cantidad
         self.__tipo = __tipo
         self.__precio = __precio
-        self.__nf = __nf
 
     #Getters:
     def getCantidad(self):
