@@ -162,13 +162,6 @@ class programa(QMainWindow, Ui_albaran):
                 
         self.rellenoComboFacDown()
     
-#        for i in self.total_items: # son trazas
-        for i in self.total_items: # son trazas
-            print str(i.getTipo()) + str(i.getCantidad())  # son trazas # EL PRIMER NUMERO PREVALECE
-#        print len(self.total_items) # son trazas 
-#        else:
-#            print "No hay item para agregar en la lista"
-        
     def rellenoComboFacDown(self):
         for i in self.total_items:
             self.boxitems_2.addItem(i.getTipo())
