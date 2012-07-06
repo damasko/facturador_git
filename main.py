@@ -23,7 +23,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
         self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
-        self.connect(self.agregarit, SIGNAL("clicked()"),self.volcarItems)
+ #       self.connect(self.agregarit, SIGNAL("clicked()"),self.volcarItems)
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
         #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
@@ -77,9 +77,11 @@ class programa(QMainWindow, Ui_albaran):
         current = self.boxclient.currentText()
         clientes_db = shelve.open("clientes.db")
         
-        #c = clientes_db[str(current)]
-        del clientes_db[str(current)]
-
+        try:
+            del clientes_db[str(current)]
+        except:
+            print "No existe el Cliente a eliminar"
+            
         self.boxclient.setCurrentIndex(-1)
         self.namec.setText("")
         self.nif.setText("")
@@ -114,13 +116,14 @@ class programa(QMainWindow, Ui_albaran):
 
         current = self.boxitems.currentText()
         items_db = shelve.open("items.db")
-        
-        #c = clientes_db[str(current)]
-        del items_db[str(current)]
+        try:
+            del items_db[str(current)]
+        except: 
+            print "No existe el Articulo a eliminar"
 
         self.boxitems.setCurrentIndex(-1)
         self.precio_item.setText("")
-
+        self.newti.setText("")
         items_db.close()
 
         # # Actualizar combobox cliente:
