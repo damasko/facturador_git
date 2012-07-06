@@ -22,6 +22,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
+        self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
         #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
@@ -108,6 +109,22 @@ class programa(QMainWindow, Ui_albaran):
         
         item_db.close()
 
+    def eliminarItem(self):
+
+        current = self.boxitems.currentText()
+        items_db = shelve.open("items.db")
+        
+        #c = clientes_db[str(current)]
+        del items_db[str(current)]
+
+        self.boxitems.setCurrentIndex(-1)
+        self.precio.setText("")
+
+        items_db.close()
+
+        # # Actualizar combobox cliente:
+        self.updateComboI("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
+        self.boxitems.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
     
     def loadCliente(self): #NO FUNCIONANDO
         clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exist
