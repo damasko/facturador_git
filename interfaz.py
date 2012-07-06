@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Fri Jul  6 16:57:55 2012
+# Created: Fri Jul  6 17:41:17 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -114,7 +114,7 @@ class Ui_albaran(object):
         self.boxclient.setMinimumSize(QtCore.QSize(200, 0))
         self.boxclient.setObjectName(_fromUtf8("boxclient"))
         self.horizontalLayout.addWidget(self.boxclient)
-        self.namec = QtGui.QLineEdit(self.centralwidget)
+        self.namec = miQLineEdit(self.centralwidget)
         self.namec.setMinimumSize(QtCore.QSize(200, 0))
         self.namec.setObjectName(_fromUtf8("namec"))
         self.horizontalLayout.addWidget(self.namec)
