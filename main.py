@@ -23,7 +23,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
         self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
- #       self.connect(self.agregarit, SIGNAL("clicked()"),self.volcarItems)
+        self.connect(self.agregait, SIGNAL("clicked()"),self.volcarItems)
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
         #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
@@ -103,6 +103,8 @@ class programa(QMainWindow, Ui_albaran):
         item_db.close()
         #actualizamos combobox cliente: 
         self.updateComboI(item1.getTipo())
+        
+         
 
     def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
         
@@ -130,10 +132,49 @@ class programa(QMainWindow, Ui_albaran):
         self.updateComboI("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxitems.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
         
-    def volcarItems(self,  total_items):
-        pass
-        
+    def volcarItems(self):
+        if self.boxitems.currentIndex() != -1:
+            item1 = item( self.boxitems.currentText(),self.precio_item.text(),self.cantidad.text() )
+            #print item1.getCantidad() # son trazas
+            
+            if not self.total_items: 
+                self.total_items.append(item1)
+            else:
+                indice = 0
+                existe = False
+                
+                while (not existe and indice < len(self.total_items)):
+                    if item1.getTipo() == self.total_items[indice].getTipo(): # si EXISTEN coincidencias es True
+                        existe = True
+                    else:
+                        existe = False  # si NO existe coincidencias es False
+                    indice += 1
+                    
+                if not existe:
+                    self.total_items.append(item1)
+                else:
+                    self.total_items[indice-1].setCantidad(self.cantidad.text()) # aprobechamos el indice para usar y sacaar el id del ultimo elemento valido. El -1 es por que se ha iterado una vez de mas.
+            
+            if not item1.getCantidad(): # si no se especifica cantidad por defecto se setea 1
+                self.cantidad_ro.setText("1")
+            else:
+                self.cantidad_ro.setText(item1.getCantidad()) # actualizamos el read only de cantidad de abajo
+                
+        self.rellenoComboFacDown()
     
+#        for i in self.total_items: # son trazas
+        for i in self.total_items: # son trazas
+            print str(i.getTipo()) + str(i.getCantidad())  # son trazas # EL PRIMER NUMERO PREVALECE
+#        print len(self.total_items) # son trazas 
+#        else:
+#            print "No hay item para agregar en la lista"
+        
+    def rellenoComboFacDown(self):
+        for i in self.total_items:
+            self.boxitems_2.addItem(i.getTipo())
+                
+        
+
     def loadCliente(self): #NO FUNCIONANDO
         clientes_db = shelve.open("clientes.db") # abrimos bases de datos en el caso de que exist
         c = clientes_db[str(self.boxclient.currentText()) ]#  Falra 1 paso se ahorra una variable: estamos creando un objetos llamado ocliente recuperado de la database Esto es lo  que contiene el combo cuando el user lo ha seleccionado: self.boxclient.currentText())# seteo desde el objeto recuperado de la base de datos:
@@ -144,7 +185,7 @@ class programa(QMainWindow, Ui_albaran):
         
         clientes_db.close()
     
-     ### Funciones de calculo de importe, etc
+     # Funciones de calculo de importe, etc
         
     def calculaImporte(self): #Esto hace el calculo de todos los precios y cantidades de los objetos del array FUNCIONANDO
         importe = 0
