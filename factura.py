@@ -1,7 +1,4 @@
-#from albaran import *
-#from PyQt4.QtCore import SIGNAL
-#from PyQt4.QtGui import *
-#from interfaz import Ui_albaran
+
 import shelve
 from cliente import *
 from item import *
@@ -78,21 +75,15 @@ class factura():
         return self.__iva
         
         
-
-    
-     # Funciones de calculo de importe, etc
+     # Funcion calculo de importe, etc
         
     def calculaImporte(self,  __volcado_aitems): #Esto hace el calculo de todos los precios y cantidades de los objetos del array No devuelve nada, solo setea los atributos
-        importe = 0
+        importeant = 0
         for i in range(len(self.__volcado_aitems)):
-            importe = float(self.__volcado_aitems[i].getCantidad())*float(self.__volcado_aitems[i].getPrecio()) + importe
-        self.setImporte(importe)
+            importeant = float(self.__volcado_aitems[i].getCantidad())*float(self.__volcado_aitems[i].getPrecio()) + importeant
+        self.setImporte(importeant)
+        print self.getImporte()
+        
         self.setIvaApli((self.__importe*self.__iva)/100)
         self.setTotal(self.__importe + self.__iva_apli)
-
-#    def calculaIva(self): #No se puede llamar a calculaImporte D: por lo que no queda mas remedio que ir de uno en uno FUNCIONANDO
-#        return int(self.__importe)*int(self.__iva)/100
-#        
-#    def agregaIva(self): #FUNCIONANDO
-#        return int(self.__importe) + int(self.__iva_apli)
 

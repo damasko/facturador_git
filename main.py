@@ -138,7 +138,10 @@ class programa(QMainWindow, Ui_albaran):
         
     def volcarItems(self):
         if self.boxitems.currentIndex() != -1:
-            item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()),str(self.cantidad.text()) )
+            if not self.cantidad.text():
+                item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()))
+            else:
+                item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()),str(self.cantidad.text()) )
             #print item1.getCantidad() # son trazas
             
             if not self.total_items: 
@@ -159,12 +162,9 @@ class programa(QMainWindow, Ui_albaran):
                 else:
                     self.total_items[indice-1].setCantidad(self.cantidad.text()) # aprovechamos el indice para usar y sacaar el id del ultimo elemento valido. El -1 es por que se ha iterado una vez de mas.
             
-            if not item1.getCantidad(): # si no se especifica cantidad por defecto se setea 1
-                self.cantidad_ro.setText("1")
-            
-            else :
-                self.cantidad_ro.setText(item1.getCantidad()) # actualizamos el read only de cantidad de abajo
-            
+#Falta que se actualice el combo al anadirlo con el nuevo elemento
+            self.cantidad_ro.setText(str(item1.getCantidad())) # actualizamos el read only de cantidad de abajo
+            self.precio_fac.setText(str(item1.getPrecio()))
             self.cantidad.setText("") #Limpio el texto de la cantidad introducida, a ver si se ve mas limpio :D
             self.rellenoComboFacDown()
     
@@ -199,11 +199,19 @@ class programa(QMainWindow, Ui_albaran):
         clientes_db.close()
         
     def calculo(self):
+        
         f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items)
-        if (not self.iva.text()):
+        for i in self.total_items: #reemplazar los "," por "." para la operacion NO FUNCIONA
+            if  "," in i.getPrecio():
+                nprec = i.getPrecio()
+                nprec.replace(",", ".", 1)
+                i.setPrecio(nprec)
+                
+        if (not self.iva.text()): #Si esta vacio le decimos que coja el iva por defecto del constructor factura.
             self.iva.setText(str(f.getIva()))
         else:
             f.setIva(str(self.iva.text()))
+            
         f.calculaImporte(self.total_items)
         
         #Seteo los campos...
