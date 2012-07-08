@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>829</width>
-    <height>566</height>
+    <width>875</width>
+    <height>542</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -283,28 +283,8 @@
     </item>
     <item row="4" column="0">
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="0">
+      <item row="1" column="2">
        <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QPushButton" name="rm_item">
-          <property name="minimumSize">
-           <size>
-            <width>110</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Borrar Item  ⇢</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="nal">
-          <property name="text">
-           <string>Tipo de articulo:</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QComboBox" name="boxitems">
           <property name="minimumSize">
@@ -351,7 +331,7 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="0">
+      <item row="2" column="2">
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="1">
          <widget class="QPushButton" name="agregait">
@@ -368,7 +348,14 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="0" alignment="Qt::AlignHCenter">
+      <item row="1" column="1">
+       <widget class="QLabel" name="nal">
+        <property name="text">
+         <string>Tipo de articulo:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="label_4">
         <property name="font">
          <font>
@@ -382,6 +369,39 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="cantidad">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="rm_item">
+        <property name="minimumSize">
+         <size>
+          <width>110</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Borrar Item  ⇢</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Cantidad:</string>
         </property>
        </widget>
       </item>
@@ -406,7 +426,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="cantidad"/>
+         <widget class="QLineEdit" name="cantidad_ro">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
         <item row="0" column="1" alignment="Qt::AlignHCenter">
          <widget class="QLabel" name="cantidadl_2">
@@ -435,7 +459,7 @@
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QComboBox" name="boxitems_2">
+         <widget class="QComboBox" name="itemfac">
           <property name="minimumSize">
            <size>
             <width>150</width>
@@ -507,7 +531,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="3" alignment="Qt::AlignHCenter">
+        <item row="0" column="4" alignment="Qt::AlignHCenter">
          <widget class="QLabel" name="label_7">
           <property name="font">
            <font>
@@ -526,10 +550,26 @@
         <item row="1" column="2">
          <widget class="QLineEdit" name="iva"/>
         </item>
-        <item row="1" column="3">
+        <item row="1" column="4">
          <widget class="QLineEdit" name="total">
           <property name="readOnly">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="iva_a"/>
+        </item>
+        <item row="0" column="3" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="iva_por">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string> Cantidad I.V.A</string>
           </property>
          </widget>
         </item>
@@ -593,11 +633,11 @@
   <tabstop>pago</tabstop>
   <tabstop>newti</tabstop>
   <tabstop>precio_item</tabstop>
-  <tabstop>cantidad</tabstop>
+  <tabstop>cantidad_ro</tabstop>
   <tabstop>precio_fac</tabstop>
   <tabstop>boxfacs</tabstop>
   <tabstop>boxclient</tabstop>
-  <tabstop>boxitems_2</tabstop>
+  <tabstop>itemfac</tabstop>
   <tabstop>addf</tabstop>
   <tabstop>addclienteB</tabstop>
   <tabstop>rm_cliente</tabstop>

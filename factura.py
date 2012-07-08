@@ -8,13 +8,14 @@ from item import *
 
 class factura():
     
-    def __init__(self, __nf,  __fecha,  __nombrec, __pago, __volcado_aitems, __importe, __total,  __iva=18):
+    def __init__(self, __nf,  __fecha,  __nombrec, __pago, __volcado_aitems, __importe = 0, __iva_apli = 0, __total = 0,  __iva=18):
         self.__nf = __nf
-        self.__fecha = self.fechaActual()
+        self.__fecha = __fecha
         self.__nombrec = __nombrec
         self.__pago = __pago
         self.__volcado_aitems = __volcado_aitems
         self.__importe = __importe
+        self.__iva_apli = __iva_apli
         self.__total = __total
         self.__iva = __iva
 
@@ -37,13 +38,16 @@ class factura():
         self.__volcado_aitems = array
     
     def setImporte(self, newimporte):
-        self.__importe = __importe
+        self.__importe = newimporte
+        
+    def setIvaApli(self, newivaapli):
+        self.__iva_apli = newivaapli
         
     def setItotal(self, newtotal):
-        self.__total = __total
+        self.__total = newtotal
         
     def setIva(self, newiva):
-        self.__iva = __iva
+        self.__iva = newiva
 
     # Getters ################################
     def getNf(self):
@@ -60,6 +64,9 @@ class factura():
 
     def getImporte(self):
         return self.__importe
+        
+    def getIvaApli(self):
+        return self.__iva_apli
      
     def getVolcado(self):
         return __volcado_aitems
@@ -71,17 +78,19 @@ class factura():
         return self.__iva
         
         
-    # Calculo de importe, iva y total
+
     
-    def calculaImporte(self): #Esto hace el calculo de todos los precios y cantidades de los objetos del array FUNCIONANDO
+     # Funciones de calculo de importe, etc
+        
+    def calculaImporte(self,  __volcado_aitems): #Esto hace el calculo de todos los precios y cantidades de los objetos del array FUNCIONANDO
         importe = 0
-        for i in range(len(self.total_items)):
-            importe = self.total_items[i].getCantidad()*self.total_items[i].getPrecio() + importe
+        for i in range(len(self.__volcado_aitems)):
+            importe = int(self.__volcado_aitems[i].getCantidad())*int(self.__volcado_aitems[i].getPrecio()) + importe
         return importe
         
     def calculaIva(self): #No se puede llamar a calculaImporte D: por lo que no queda mas remedio que ir de uno en uno FUNCIONANDO
-        return (self.calculaImporte()*self.__iva)/100
+        return int(self.__importe)*int(self.__iva)/100
         
-    def agregaIva(self,  importe,  iva): #FUNCIONANDO
-        return self.calculaImporte() + self.calculaIva()
-    
+    def agregaIva(self): #FUNCIONANDO
+        return int(self.__importe) + int(self.__iva_apli)
+        

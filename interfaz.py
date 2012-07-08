@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Fri Jul  6 19:09:39 2012
+# Created: Sun Jul  8 14:51:00 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -251,10 +251,10 @@ class Ui_albaran(object):
         self.preciol_2.setFont(font)
         self.preciol_2.setObjectName(_fromUtf8("preciol_2"))
         self.gridLayout_7.addWidget(self.preciol_2, 0, 3, 1, 1)
-        self.boxitems_2 = QtGui.QComboBox(self.centralwidget)
-        self.boxitems_2.setMinimumSize(QtCore.QSize(150, 0))
-        self.boxitems_2.setObjectName(_fromUtf8("boxitems_2"))
-        self.gridLayout_7.addWidget(self.boxitems_2, 1, 2, 1, 1)
+        self.itemfac = QtGui.QComboBox(self.centralwidget)
+        self.itemfac.setMinimumSize(QtCore.QSize(150, 0))
+        self.itemfac.setObjectName(_fromUtf8("itemfac"))
+        self.gridLayout_7.addWidget(self.itemfac, 1, 2, 1, 1)
         self.articulol_2 = QtGui.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setBold(False)
@@ -292,7 +292,7 @@ class Ui_albaran(object):
         font.setWeight(75)
         self.label_7.setFont(font)
         self.label_7.setObjectName(_fromUtf8("label_7"))
-        self.gridLayout_8.addWidget(self.label_7, 0, 3, 1, 1)
+        self.gridLayout_8.addWidget(self.label_7, 0, 4, 1, 1)
         self.importe = QtGui.QLineEdit(self.centralwidget)
         self.importe.setObjectName(_fromUtf8("importe"))
         self.gridLayout_8.addWidget(self.importe, 1, 1, 1, 1)
@@ -302,7 +302,17 @@ class Ui_albaran(object):
         self.total = QtGui.QLineEdit(self.centralwidget)
         self.total.setReadOnly(True)
         self.total.setObjectName(_fromUtf8("total"))
-        self.gridLayout_8.addWidget(self.total, 1, 3, 1, 1)
+        self.gridLayout_8.addWidget(self.total, 1, 4, 1, 1)
+        self.iva_a = QtGui.QLineEdit(self.centralwidget)
+        self.iva_a.setObjectName(_fromUtf8("iva_a"))
+        self.gridLayout_8.addWidget(self.iva_a, 1, 3, 1, 1)
+        self.iva_por = QtGui.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.iva_por.setFont(font)
+        self.iva_por.setObjectName(_fromUtf8("iva_por"))
+        self.gridLayout_8.addWidget(self.iva_por, 0, 3, 1, 1)
         self.gridLayout_5.addLayout(self.gridLayout_8, 2, 0, 1, 1)
         self.label_8 = QtGui.QLabel(self.centralwidget)
         font = QtGui.QFont()
@@ -344,8 +354,8 @@ class Ui_albaran(object):
         albaran.setTabOrder(self.cantidad_ro, self.precio_fac)
         albaran.setTabOrder(self.precio_fac, self.boxfacs)
         albaran.setTabOrder(self.boxfacs, self.boxclient)
-        albaran.setTabOrder(self.boxclient, self.boxitems_2)
-        albaran.setTabOrder(self.boxitems_2, self.addf)
+        albaran.setTabOrder(self.boxclient, self.itemfac)
+        albaran.setTabOrder(self.itemfac, self.addf)
         albaran.setTabOrder(self.addf, self.addclienteB)
         albaran.setTabOrder(self.addclienteB, self.rm_cliente)
         albaran.setTabOrder(self.rm_cliente, self.nuevoitem)
@@ -385,6 +395,7 @@ class Ui_albaran(object):
         self.label_6.setText(QtGui.QApplication.translate("albaran", "Importe", None, QtGui.QApplication.UnicodeUTF8))
         self.calculaImporteB.setText(QtGui.QApplication.translate("albaran", "Calcular", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("albaran", "Total", None, QtGui.QApplication.UnicodeUTF8))
+        self.iva_por.setText(QtGui.QApplication.translate("albaran", " Cantidad I.V.A", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("albaran", "Calculo del importe:", None, QtGui.QApplication.UnicodeUTF8))
         self.exitb.setText(QtGui.QApplication.translate("albaran", "Salir", None, QtGui.QApplication.UnicodeUTF8))
         self.GuardarTodoB.setText(QtGui.QApplication.translate("albaran", "Guardar Factura", None, QtGui.QApplication.UnicodeUTF8))

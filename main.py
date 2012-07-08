@@ -19,12 +19,14 @@ class programa(QMainWindow, Ui_albaran):
         # linkando interfaz con funciones:
         self.connect(self.boxitems, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
+        self.connect(self.itemfac, SIGNAL("activated(const QString&)"), self.loadPrecio)
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
         self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
         self.connect(self.agregait, SIGNAL("clicked()"),self.volcarItems)
-        self.connect(self.boxitems_2,  SIGNAL("activated(const QString&"),  self.loadPrecio)
+        self.connect(self.calculaImporteB, SIGNAL("clicked()"),self.calculo)
+        
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
         #all_clientes_de_combo = [self.boxclient.itemText(x) for x in range(self.boxclient.count())]
@@ -38,6 +40,7 @@ class programa(QMainWindow, Ui_albaran):
         
         #Seteamos a la fecha actual, por defecto
         self.de3.setText(self.fechaActual())
+        
 
     def fechaActual(self):
         fecha = datetime.date.today()
@@ -135,7 +138,7 @@ class programa(QMainWindow, Ui_albaran):
         
     def volcarItems(self):
         if self.boxitems.currentIndex() != -1:
-            item1 = item( self.boxitems.currentText(),self.precio_item.text(),self.cantidad.text() )
+            item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()),str(self.cantidad.text()) )
             #print item1.getCantidad() # son trazas
             
             if not self.total_items: 
@@ -158,18 +161,31 @@ class programa(QMainWindow, Ui_albaran):
             
             if not item1.getCantidad(): # si no se especifica cantidad por defecto se setea 1
                 self.cantidad_ro.setText("1")
-            else:
+            
+            else :
                 self.cantidad_ro.setText(item1.getCantidad()) # actualizamos el read only de cantidad de abajo
-                
+            
+            self.cantidad.setText("") #Limpio el texto de la cantidad introducida, a ver si se ve mas limpio :D
             self.rellenoComboFacDown()
     
     def rellenoComboFacDown(self):
-
-        self.boxitems_2.clear()
+        
+        self.itemfac.clear()
         for i in self.total_items:
-            self.boxitems_2.addItem(i.getTipo())
-        self.cantidad_ro.setText(i.getCantidad())
-            
+            self.itemfac.addItem(i.getTipo())
+        
+    
+    def loadPrecio(self):
+        indice = 0
+        corto = False
+        while (not corto and indice < len(self.total_items)):
+            if (self.total_items[indice].getTipo() == self.itemfac.currentText()):
+                it = self.total_items[indice]
+                corto = True
+            indice += 1
+        
+        self.cantidad_ro.setText(it.getCantidad())
+        self.precio_fac.setText(it.getPrecio())
         
 
     def loadCliente(self): 
@@ -181,21 +197,25 @@ class programa(QMainWindow, Ui_albaran):
         self.calle.setText(c.getCalle())
         
         clientes_db.close()
+        
+    def calculo(self):
+        f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items)
+        if (not self.iva.text()):
+            self.iva.setText(str(f.getIva()))
+        else:
+            f.setIva(str(self.iva.text()))
+            
+        importe = f.calculaImporte(self.total_items)
+        f.setImporte(importe)
+        self.importe.setText(str(importe))
+        iva_apli = f.calculaIva()
+        self.iva_a.setText(str(iva_apli))
+        
+        f.setIvaApli(str(iva_apli))
+        totali = f.agregaIva()
+        self.total.setText(str(totali))
     
-     # Funciones de calculo de importe, etc
-        
-    def calculaImporte(self): #Esto hace el calculo de todos los precios y cantidades de los objetos del array FUNCIONANDO
-        importe = 0
-        for i in range(len(self.total_items)):
-            importe = self.total_items[i].getCantidad()*self.total_items[i].getPrecio() + importe
-        return importe
-        
-    def calculaIva(self): #No se puede llamar a calculaImporte D: por lo que no queda mas remedio que ir de uno en uno FUNCIONANDO
-        return (self.calculaImporte()*self.__iva)/100
-        
-    def agregaIva(self,  importe,  iva): #FUNCIONANDO
-        return self.calculaImporte() + self.calculaIva()
-        
+    
 
 
 #MAIN
