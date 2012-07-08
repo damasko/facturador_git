@@ -78,12 +78,12 @@ class factura():
      # Funcion calculo de importe, etc
         
     def calculaImporte(self,  __volcado_aitems): #Esto hace el calculo de todos los precios y cantidades de los objetos del array No devuelve nada, solo setea los atributos
-        importeant = 0
-        for i in range(len(self.__volcado_aitems)):
-            importeant = float(self.__volcado_aitems[i].getCantidad())*float(self.__volcado_aitems[i].getPrecio()) + importeant
-        self.setImporte(importeant)
-        print self.getImporte()
+        importeant = 0 #mirar si la 2 vez se ha convertido el iva en algo que no le mola 
+        for i in self.__volcado_aitems:
+            importeant = int(i.getCantidad())*float(i.getPrecio()) + importeant
+        importeround = round(importeant,  3)
+        self.setImporte(importeround)
         
-        self.setIvaApli((self.__importe*self.__iva)/100)
+        self.setIvaApli(float(self.__importe)*float(self.__iva)/100)
         self.setTotal(self.__importe + self.__iva_apli)
 

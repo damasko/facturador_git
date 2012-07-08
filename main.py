@@ -184,7 +184,7 @@ class programa(QMainWindow, Ui_albaran):
                 corto = True
             indice += 1
         
-        self.cantidad_ro.setText(it.getCantidad())
+        self.cantidad_ro.setText(str(it.getCantidad()))
         self.precio_fac.setText(it.getPrecio())
         
 

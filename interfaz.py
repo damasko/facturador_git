@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Sun Jul  8 15:41:44 2012
+# Created: Mon Jul  9 00:47:00 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
