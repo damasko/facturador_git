@@ -43,7 +43,7 @@ class factura():
     def setIvaApli(self, newivaapli):
         self.__iva_apli = newivaapli
         
-    def setItotal(self, newtotal):
+    def setTotal(self, newtotal):
         self.__total = newtotal
         
     def setIva(self, newiva):
@@ -82,15 +82,17 @@ class factura():
     
      # Funciones de calculo de importe, etc
         
-    def calculaImporte(self,  __volcado_aitems): #Esto hace el calculo de todos los precios y cantidades de los objetos del array FUNCIONANDO
+    def calculaImporte(self,  __volcado_aitems): #Esto hace el calculo de todos los precios y cantidades de los objetos del array No devuelve nada, solo setea los atributos
         importe = 0
         for i in range(len(self.__volcado_aitems)):
-            importe = int(self.__volcado_aitems[i].getCantidad())*int(self.__volcado_aitems[i].getPrecio()) + importe
-        return importe
-        
-    def calculaIva(self): #No se puede llamar a calculaImporte D: por lo que no queda mas remedio que ir de uno en uno FUNCIONANDO
-        return int(self.__importe)*int(self.__iva)/100
-        
-    def agregaIva(self): #FUNCIONANDO
-        return int(self.__importe) + int(self.__iva_apli)
-        
+            importe = float(self.__volcado_aitems[i].getCantidad())*float(self.__volcado_aitems[i].getPrecio()) + importe
+        self.setImporte(importe)
+        self.setIvaApli((self.__importe*self.__iva)/100)
+        self.setTotal(self.__importe + self.__iva_apli)
+
+#    def calculaIva(self): #No se puede llamar a calculaImporte D: por lo que no queda mas remedio que ir de uno en uno FUNCIONANDO
+#        return int(self.__importe)*int(self.__iva)/100
+#        
+#    def agregaIva(self): #FUNCIONANDO
+#        return int(self.__importe) + int(self.__iva_apli)
+

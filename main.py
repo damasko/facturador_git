@@ -204,21 +204,16 @@ class programa(QMainWindow, Ui_albaran):
             self.iva.setText(str(f.getIva()))
         else:
             f.setIva(str(self.iva.text()))
-            
-        importe = f.calculaImporte(self.total_items)
-        f.setImporte(importe)
-        self.importe.setText(str(importe))
-        iva_apli = f.calculaIva()
-        self.iva_a.setText(str(iva_apli))
+        f.calculaImporte(self.total_items)
         
-        f.setIvaApli(str(iva_apli))
-        totali = f.agregaIva()
-        self.total.setText(str(totali))
-    
-    
+        #Seteo los campos...
+        self.importe.setText(str(f.getImporte()))
+        self.iva_a.setText(str(f.getIvaApli()))
+        self.total.setText(str(f.getTotal()))
 
 
 #MAIN
+
 if __name__ == "__main__":
         app = QApplication(sys.argv)
         window = programa()

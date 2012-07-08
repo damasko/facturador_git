@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Sun Jul  8 14:51:00 2012
+# Created: Sun Jul  8 15:41:44 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -69,10 +69,12 @@ class Ui_albaran(object):
         font.setBold(False)
         font.setWeight(50)
         self.de2l.setFont(font)
+        self.de2l.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.de2l.setObjectName(_fromUtf8("de2l"))
         self.horizontalLayout_2.addWidget(self.de2l)
         self.de3 = QtGui.QLineEdit(self.centralwidget)
         self.de3.setMinimumSize(QtCore.QSize(200, 0))
+        self.de3.setMaximumSize(QtCore.QSize(200, 16777215))
         self.de3.setObjectName(_fromUtf8("de3"))
         self.horizontalLayout_2.addWidget(self.de3)
         self.gridLayout_2.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
@@ -331,9 +333,11 @@ class Ui_albaran(object):
         self.exitb.setObjectName(_fromUtf8("exitb"))
         self.gridLayout.addWidget(self.exitb, 1, 1, 1, 1)
         self.GuardarTodoB = QtGui.QPushButton(self.centralwidget)
+        self.GuardarTodoB.setMaximumSize(QtCore.QSize(200, 16777215))
         self.GuardarTodoB.setObjectName(_fromUtf8("GuardarTodoB"))
         self.gridLayout.addWidget(self.GuardarTodoB, 0, 1, 1, 1)
         self.rmallfac = QtGui.QPushButton(self.centralwidget)
+        self.rmallfac.setMaximumSize(QtCore.QSize(200, 16777215))
         self.rmallfac.setObjectName(_fromUtf8("rmallfac"))
         self.gridLayout.addWidget(self.rmallfac, 0, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 7, 0, 1, 1)
