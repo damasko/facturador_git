@@ -26,6 +26,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.rm_item, SIGNAL("clicked()"),self.eliminarItem)
         self.connect(self.agregait, SIGNAL("clicked()"),self.volcarItems)
         self.connect(self.calculaImporteB, SIGNAL("clicked()"),self.calculo)
+        self.connect(self.rmitemfacB, SIGNAL("clicked()"),self.rmitemfac)
         
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
@@ -198,15 +199,28 @@ class programa(QMainWindow, Ui_albaran):
         
         clientes_db.close()
         
+    def rmitemfac(self):
+        indice = 0
+        corto = False
+        while (not corto and indice < len(self.total_items)):
+            if (self.total_items[indice].getTipo() == self.itemfac.currentText()):
+                del self.total_items[indice]
+                corto = True
+            indice += 1
+        self.cantidad_ro.setText("")
+        self.precio_fac.setText("")
+        self.rellenoComboFacDown()
+        
+        
     def calculo(self):
         
         f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items)
         for i in self.total_items: #reemplazar los "," por "." para la operacion NO FUNCIONA
             if  "," in i.getPrecio():
                 nprec = i.getPrecio()
-                nprec.replace(",", ".", 1)
+                nprec.replace(",", ".")
                 i.setPrecio(nprec)
-                
+        
         if (not self.iva.text()): #Si esta vacio le decimos que coja el iva por defecto del constructor factura.
             self.iva.setText(str(f.getIva()))
         else:

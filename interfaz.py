@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Mon Jul  9 00:47:00 2012
+# Created: Mon Jul  9 01:22:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -264,9 +264,9 @@ class Ui_albaran(object):
         self.articulol_2.setFont(font)
         self.articulol_2.setObjectName(_fromUtf8("articulol_2"))
         self.gridLayout_7.addWidget(self.articulol_2, 0, 2, 1, 1)
-        self.rmItemAct = QtGui.QPushButton(self.centralwidget)
-        self.rmItemAct.setObjectName(_fromUtf8("rmItemAct"))
-        self.gridLayout_7.addWidget(self.rmItemAct, 1, 0, 1, 1)
+        self.rmitemfacB = QtGui.QPushButton(self.centralwidget)
+        self.rmitemfacB.setObjectName(_fromUtf8("rmitemfacB"))
+        self.gridLayout_7.addWidget(self.rmitemfacB, 1, 0, 1, 1)
         self.gridLayout_5.addLayout(self.gridLayout_7, 1, 0, 1, 1)
         self.gridLayout_8 = QtGui.QGridLayout()
         self.gridLayout_8.setObjectName(_fromUtf8("gridLayout_8"))
@@ -364,8 +364,8 @@ class Ui_albaran(object):
         albaran.setTabOrder(self.addclienteB, self.rm_cliente)
         albaran.setTabOrder(self.rm_cliente, self.nuevoitem)
         albaran.setTabOrder(self.nuevoitem, self.agregait)
-        albaran.setTabOrder(self.agregait, self.rmItemAct)
-        albaran.setTabOrder(self.rmItemAct, self.calculaImporteB)
+        albaran.setTabOrder(self.agregait, self.rmitemfacB)
+        albaran.setTabOrder(self.rmitemfacB, self.calculaImporteB)
         albaran.setTabOrder(self.calculaImporteB, self.rmallfac)
         albaran.setTabOrder(self.rmallfac, self.GuardarTodoB)
         albaran.setTabOrder(self.GuardarTodoB, self.exitb)
@@ -394,7 +394,7 @@ class Ui_albaran(object):
         self.cantidadl_2.setText(QtGui.QApplication.translate("albaran", "Cantidad", None, QtGui.QApplication.UnicodeUTF8))
         self.preciol_2.setText(QtGui.QApplication.translate("albaran", "Precio", None, QtGui.QApplication.UnicodeUTF8))
         self.articulol_2.setText(QtGui.QApplication.translate("albaran", "Tipo de Articulo", None, QtGui.QApplication.UnicodeUTF8))
-        self.rmItemAct.setText(QtGui.QApplication.translate("albaran", "Quitar Item ⇢", None, QtGui.QApplication.UnicodeUTF8))
+        self.rmitemfacB.setText(QtGui.QApplication.translate("albaran", "Quitar Item ⇢", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("albaran", "I.V.A", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("albaran", "Importe", None, QtGui.QApplication.UnicodeUTF8))
         self.calculaImporteB.setText(QtGui.QApplication.translate("albaran", "Calcular", None, QtGui.QApplication.UnicodeUTF8))
