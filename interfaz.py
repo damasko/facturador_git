@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'interfaz_v005.ui'
 #
-# Created: Mon Jul  9 01:22:55 2012
+# Created: Mon Jul  9 02:25:33 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -332,10 +332,10 @@ class Ui_albaran(object):
         self.exitb = QtGui.QPushButton(self.centralwidget)
         self.exitb.setObjectName(_fromUtf8("exitb"))
         self.gridLayout.addWidget(self.exitb, 1, 1, 1, 1)
-        self.GuardarTodoB = QtGui.QPushButton(self.centralwidget)
-        self.GuardarTodoB.setMaximumSize(QtCore.QSize(200, 16777215))
-        self.GuardarTodoB.setObjectName(_fromUtf8("GuardarTodoB"))
-        self.gridLayout.addWidget(self.GuardarTodoB, 0, 1, 1, 1)
+        self.guardartodoB = QtGui.QPushButton(self.centralwidget)
+        self.guardartodoB.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.guardartodoB.setObjectName(_fromUtf8("guardartodoB"))
+        self.gridLayout.addWidget(self.guardartodoB, 0, 1, 1, 1)
         self.rmallfac = QtGui.QPushButton(self.centralwidget)
         self.rmallfac.setMaximumSize(QtCore.QSize(200, 16777215))
         self.rmallfac.setObjectName(_fromUtf8("rmallfac"))
@@ -367,8 +367,8 @@ class Ui_albaran(object):
         albaran.setTabOrder(self.agregait, self.rmitemfacB)
         albaran.setTabOrder(self.rmitemfacB, self.calculaImporteB)
         albaran.setTabOrder(self.calculaImporteB, self.rmallfac)
-        albaran.setTabOrder(self.rmallfac, self.GuardarTodoB)
-        albaran.setTabOrder(self.GuardarTodoB, self.exitb)
+        albaran.setTabOrder(self.rmallfac, self.guardartodoB)
+        albaran.setTabOrder(self.guardartodoB, self.exitb)
 
     def retranslateUi(self, albaran):
         albaran.setWindowTitle(QtGui.QApplication.translate("albaran", "Facturador", None, QtGui.QApplication.UnicodeUTF8))
@@ -402,6 +402,6 @@ class Ui_albaran(object):
         self.iva_por.setText(QtGui.QApplication.translate("albaran", " Cantidad I.V.A", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("albaran", "Calculo del importe:", None, QtGui.QApplication.UnicodeUTF8))
         self.exitb.setText(QtGui.QApplication.translate("albaran", "Salir", None, QtGui.QApplication.UnicodeUTF8))
-        self.GuardarTodoB.setText(QtGui.QApplication.translate("albaran", "Guardar Factura", None, QtGui.QApplication.UnicodeUTF8))
+        self.guardartodoB.setText(QtGui.QApplication.translate("albaran", "Guardar Factura", None, QtGui.QApplication.UnicodeUTF8))
         self.rmallfac.setText(QtGui.QApplication.translate("albaran", "☢ Eliminar Factura Actual", None, QtGui.QApplication.UnicodeUTF8))
 

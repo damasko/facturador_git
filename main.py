@@ -20,6 +20,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.boxitems, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
         self.connect(self.itemfac, SIGNAL("activated(const QString&)"), self.loadPrecio)
+        #self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadFactura)
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
@@ -27,6 +28,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.agregait, SIGNAL("clicked()"),self.volcarItems)
         self.connect(self.calculaImporteB, SIGNAL("clicked()"),self.calculo)
         self.connect(self.rmitemfacB, SIGNAL("clicked()"),self.rmitemfac)
+        self.connect(self.guardartodoB, SIGNAL("clicked()"),self.guardarFactura)
         
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
@@ -111,7 +113,7 @@ class programa(QMainWindow, Ui_albaran):
         
          
 
-    def loadItem(self): #Esta funcion comprueba si hay un item, si es asi lo carga NO FUNCIONANDO
+    def loadItem(self): 
         
         item_db = shelve.open("items.db") # abrimos bases de datos en el caso de que exist
         it = item_db[str(self.boxitems.currentText()) ]
@@ -232,6 +234,26 @@ class programa(QMainWindow, Ui_albaran):
         self.importe.setText(str(f.getImporte()))
         self.iva_a.setText(str(f.getIvaApli()))
         self.total.setText(str(f.getTotal()))
+        
+    def guardarFactura(self):
+        ofactura = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items, self.importe.text(), self.iva.text(), self.iva.text())
+        # w:
+        facturas_db = shelve.open("facturas.db")
+        facturas_db[str(ofactura.getNf())] = ofactura
+        
+
+        
+        facturas_db.close()
+        #actualizamos combobox facturas: 
+        self.updateComboF(ofactura.getNf())
+        
+    def updateComboF(self,  nf):
+        self.boxfacs.clear() # limpiamos combobox clietnes
+        facturas_db = shelve.open("facturas.db") # abrimos bases de datos en el caso de que exista
+        self.boxfacs.addItems(sorted(facturas_db.keys())) # rellenamos con todos los clientes
+        index = self.boxfacs.findText(str(nf))# busco el nf para obtener el index
+        self.boxfacs.setCurrentIndex(index) # seteo por index
+        facturas_db.close() # cerramos
 
 
 #MAIN
