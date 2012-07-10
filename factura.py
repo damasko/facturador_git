@@ -5,16 +5,19 @@ from item import *
 
 class factura():
     
-    def __init__(self, __nf,  __fecha,  __nombrec, __pago, __volcado_aitems, __importe = 0, __iva_apli = 0, __total = 0,  __iva=18):
+    def __init__(self, __nf,  __fecha,  __nombrec, __nifc,  __pobc,  __callec, __pago, __volcado_aitems, __importe = 0,  __iva=18, __iva_apli = 0, __total = 0 ):
         self.__nf = __nf
         self.__fecha = __fecha
         self.__nombrec = __nombrec
+        self.__nifc = __nifc
+        self.__pobc = __pobc
+        self.__callec = __callec
         self.__pago = __pago
         self.__volcado_aitems = __volcado_aitems
         self.__importe = __importe
+        self.__iva = __iva
         self.__iva_apli = __iva_apli
         self.__total = __total
-        self.__iva = __iva
 
     
     # Setters ###############################
@@ -25,8 +28,17 @@ class factura():
     def setNf(self, newnf):
         self.__nf = newnf
         
-    def setNombrec(self, nombrec):
-        self.__nombrec = nombrec
+    def setNombrec(self, newnombrec):
+        self.__nombrec = newnombrec
+    
+    def setNifc(self, newnifc):
+        self.__nifc = newnifc
+        
+    def setPobc(self, newpobc):
+        self.__pobc = newpobc
+        
+    def setCallec(self, newcallec):
+        self.__callec = newcallec
         
     def setPago(self, newpago):
         self.__pago = __pago
@@ -37,14 +49,16 @@ class factura():
     def setImporte(self, newimporte):
         self.__importe = newimporte
         
+    def setIva(self, newiva):
+        self.__iva = newiva
+        
     def setIvaApli(self, newivaapli):
         self.__iva_apli = newivaapli
         
     def setTotal(self, newtotal):
         self.__total = newtotal
         
-    def setIva(self, newiva):
-        self.__iva = newiva
+    
 
     # Getters ################################
     def getNf(self):
@@ -56,24 +70,33 @@ class factura():
     def getNombrec(self):
         return self.__nombrec
         
+    def getNifc(self):
+        return self.__nifc
+        
+    def getPobc(self):
+        return self.__pobc
+        
+    def getCallec(self):
+        return self.__callec
+        
     def getPago(self):
         return self.__pago
+        
+    def getVolcado(self):
+        return self.__volcado_aitems
 
     def getImporte(self):
         return self.__importe
+    
+    def getIva(self):
+        return self.__iva
         
     def getIvaApli(self):
         return self.__iva_apli
      
-    def getVolcado(self):
-        return __volcado_aitems
-
     def getTotal(self):
         return self.__total
 
-    def getIva(self):
-        return self.__iva
-        
         
      # Funcion calculo de importe, etc
         

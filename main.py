@@ -20,7 +20,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.boxitems, SIGNAL("activated(const QString&)"), self.loadItem)
         self.connect(self.boxclient, SIGNAL("activated(const QString&)"), self.loadCliente)
         self.connect(self.itemfac, SIGNAL("activated(const QString&)"), self.loadPrecio)
-        #self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadFactura)
+        self.connect(self.boxfacs, SIGNAL("activated(const QString&)"), self.loadFactura)
         self.connect(self.addclienteB, SIGNAL("clicked()"),self.agregarCliente)
         self.connect(self.nuevoitem, SIGNAL("clicked()"),self.agregarItem)
         self.connect(self.rm_cliente, SIGNAL("clicked()"),self.eliminarCliente)
@@ -40,6 +40,10 @@ class programa(QMainWindow, Ui_albaran):
         #Desplegable items...
         self.updateComboI("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxitems.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
+        
+        #Desplegable facturas
+        self.updateComboF("")
+        self.boxfacs.setCurrentIndex(-1)
         
         #Seteamos a la fecha actual, por defecto
         self.de3.setText(self.fechaActual())
@@ -104,6 +108,7 @@ class programa(QMainWindow, Ui_albaran):
     def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
         item1 = item(self.newti.text(), self.precio_item.text())
         # w:
+        
         item_db = shelve.open("items.db")
         item_db[str(item1.getTipo())] = item1
         
@@ -216,7 +221,7 @@ class programa(QMainWindow, Ui_albaran):
         
     def calculo(self):
         
-        f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items)
+        f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.nif.text()), str(self.poblacion.text()),  str(self.calle.text()), str(self.pago.text()), self.total_items)
         for i in self.total_items: #reemplazar los "," por "." para la operacion NO FUNCIONA
             if  "," in i.getPrecio():
                 nprec = i.getPrecio()
@@ -236,13 +241,11 @@ class programa(QMainWindow, Ui_albaran):
         self.total.setText(str(f.getTotal()))
         
     def guardarFactura(self):
-        ofactura = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.pago.text()), self.total_items, self.importe.text(), self.iva.text(), self.iva.text())
+        ofactura = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.nif.text()), str(self.poblacion.text()), str(self.calle.text()), str(self.pago.text()), self.total_items, self.importe.text(), self.iva.text(), self.iva_a.text(),  self.total.text())
         # w:
         facturas_db = shelve.open("facturas.db")
-        facturas_db[str(ofactura.getNf())] = ofactura
-        
+        facturas_db[str(ofactura.getNf())] = ofactura        
 
-        
         facturas_db.close()
         #actualizamos combobox facturas: 
         self.updateComboF(ofactura.getNf())
@@ -254,6 +257,49 @@ class programa(QMainWindow, Ui_albaran):
         index = self.boxfacs.findText(str(nf))# busco el nf para obtener el index
         self.boxfacs.setCurrentIndex(index) # seteo por index
         facturas_db.close() # cerramos
+    
+    def loadFactura(self):
+        facturas_db = shelve.open("facturas.db") # abrimos bases de datos en el caso de que exist
+        f = facturas_db[str(self.boxfacs.currentText()) ]#  Falra 1 paso se ahorra una variable: estamos creando un objetos llamado ocliente recuperado de la database Esto es lo  que contiene el combo cuando el user lo ha seleccionado: self.boxclient.currentText())# seteo desde el objeto recuperado de la base de datos:
+        self.nf.setText(f.getNf())
+        self.de3.setText(f.getFecha())
+        self.namec.setText(f.getNombrec())
+        self.nif.setText(f.getNifc())
+        self.poblacion.setText(f.getPobc())
+        self.calle.setText(f.getCallec())
+        self.pago.setText(f.getPago())
+        self.total_items = f.getVolcado()
+        self.importe.setText(f.getImporte())
+        self.iva.setText(f.getIva())
+        self.iva_a.setText(f.getIva())
+        self.total.setText(f.getTotal())
+        
+        facturas_db.close()
+        
+    def eliminarFactura(self):
+
+        current = self.boxfacs.currentText()
+        facturas_db = shelve.open("facturas.db")
+        try:
+            del facturas_db[str(current)]
+        except: 
+            print "No existe la Factura a eliminar"
+        
+        self.nf.setText("")
+        self.de3.setText("")
+        self.nombrec.setText("")
+        self.pago.setText("")
+        self.total_items = []
+        self.importe.setText("")
+        self.iva.setText("")
+        self.iva_a.setText("")
+        self.total.setText("")
+
+        facturas_db.close()
+
+        # # Actualizar combobox cliente:
+        self.updateComboF("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
+        self.boxfacs.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
 
 
 #MAIN
