@@ -29,6 +29,7 @@ class programa(QMainWindow, Ui_albaran):
         self.connect(self.calculaImporteB, SIGNAL("clicked()"),self.calculo)
         self.connect(self.rmitemfacB, SIGNAL("clicked()"),self.rmitemfac)
         self.connect(self.guardartodoB, SIGNAL("clicked()"),self.guardarFactura)
+        self.connect(self.rmallfac, SIGNAL("clicked()"),self.eliminarFactura )
         
 
         # recopilamos listado de clientes del combobox en un array para el autocompletado por tabulador:
@@ -269,6 +270,7 @@ class programa(QMainWindow, Ui_albaran):
         self.calle.setText(f.getCallec())
         self.pago.setText(f.getPago())
         self.total_items = f.getVolcado()
+        self.rellenoComboFacDown()
         self.importe.setText(f.getImporte())
         self.iva.setText(f.getIva())
         self.iva_a.setText(f.getIva())
@@ -287,7 +289,10 @@ class programa(QMainWindow, Ui_albaran):
         
         self.nf.setText("")
         self.de3.setText("")
-        self.nombrec.setText("")
+        self.namec.setText("")
+        self.nif.setText("")
+        self.poblacion.setText("")
+        self.calle.setText("")
         self.pago.setText("")
         self.total_items = []
         self.importe.setText("")
@@ -298,8 +303,8 @@ class programa(QMainWindow, Ui_albaran):
         facturas_db.close()
 
         # # Actualizar combobox cliente:
-        self.updateComboF("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
-        self.boxfacs.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
+        self.itemfac.clear() # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
+        self.itemfac.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
 
 
 #MAIN
