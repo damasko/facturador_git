@@ -147,17 +147,18 @@ class programa(QMainWindow, Ui_albaran):
         self.boxitems.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
         
     def volcarItems(self):
-        if self.boxitems.currentIndex() != -1:
+        # dependiendo de si el item tiene cantidad o no
+        if self.boxitems.currentIndex() != -1: # si no tiene cantidad pillamos la de por default del constructor
             if not self.cantidad.text():
                 item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()))
-            else:
+            else: # sino creo el objeto con su cantidad dada por el user
                 item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()),str(self.cantidad.text()) )
             #print item1.getCantidad() # son trazas
             
+            # comprobacion para que no se repitan items:
             if not self.total_items: 
                 self.total_items.append(item1)
             else:
-                
                 indice = 0
                 existe = False
                 while (not existe and indice < len(self.total_items)):
@@ -172,11 +173,18 @@ class programa(QMainWindow, Ui_albaran):
                 else:
                     self.total_items[indice-1].setCantidad(self.cantidad.text()) # aprovechamos el indice para usar y sacaar el id del ultimo elemento valido. El -1 es por que se ha iterado una vez de mas.
             
-#Falta que se actualice el combo al anadirlo con el nuevo elemento
             self.cantidad_ro.setText(str(item1.getCantidad())) # actualizamos el read only de cantidad de abajo
             self.precio_fac.setText(str(item1.getPrecio()))
             self.cantidad.setText("") #Limpio el texto de la cantidad introducida, a ver si se ve mas limpio :D
             self.rellenoComboFacDown()
+            
+            ### en construccion ##################
+            #Falta que se actualice el combo al anadirlo con el nuevo elemento
+            print str(self.boxitems.currentText())
+            self.itemfac.addItem(self.boxitems.currentText())
+            index = self.itemfac.findText(str(self.boxitems.currentText()))# busco el nf para obtener el index
+            self.itemfac.setCurrentIndex(index) # seteo por index
+            ########################################
     
     def rellenoComboFacDown(self):
         

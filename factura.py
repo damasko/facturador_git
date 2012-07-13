@@ -111,5 +111,5 @@ class factura():
             self.setIvaApli(float(self.__importe)*float(self.__iva)/100)
             self.setTotal(self.__importe + self.__iva_apli)
         except ValueError:
-            print "el campo precio esta vacio"
+            print "el campo precio o el campo cantidad esta vacio, revise la lista de items y rectifique el/los items."
 
