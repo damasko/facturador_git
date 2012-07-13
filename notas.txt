@@ -1,0 +1,4 @@
+1 agregar a la factura no actualiza precio ni combobox de abajo
+2 no rescata cantidad el combobox de tipo de articulo de abajo
+3 agregar boton nueva factura que setee en blanco todo incluido combobox excepto combobox clientes combobox items
+4 agregar combo de facturas propias del cliente
