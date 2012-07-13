@@ -114,14 +114,23 @@
         <property name="text">
          <string>Fecha </string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QLineEdit" name="de3">
         <property name="minimumSize">
          <size>
           <width>200</width>
           <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
          </size>
         </property>
        </widget>
@@ -482,7 +491,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="rmItemAct">
+         <widget class="QPushButton" name="rmitemfacB">
           <property name="text">
            <string>Quitar Item ⇢</string>
           </property>
@@ -605,7 +614,13 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="GuardarTodoB">
+       <widget class="QPushButton" name="guardartodoB">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Guardar Factura</string>
         </property>
@@ -613,6 +628,12 @@
       </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="rmallfac">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>☢ Eliminar Factura Actual</string>
         </property>
@@ -643,10 +664,10 @@
   <tabstop>rm_cliente</tabstop>
   <tabstop>nuevoitem</tabstop>
   <tabstop>agregait</tabstop>
-  <tabstop>rmItemAct</tabstop>
+  <tabstop>rmitemfacB</tabstop>
   <tabstop>calculaImporteB</tabstop>
   <tabstop>rmallfac</tabstop>
-  <tabstop>GuardarTodoB</tabstop>
+  <tabstop>guardartodoB</tabstop>
   <tabstop>exitb</tabstop>
  </tabstops>
  <resources/>
