@@ -1,4 +1,7 @@
-1 agregar a la factura no actualiza precio ni combobox de abajo
-2 no rescata cantidad el combobox de tipo de articulo de abajo
-3 agregar boton nueva factura que setee en blanco todo incluido combobox excepto combobox clientes combobox items
-4 agregar combo de facturas propias del cliente
+1 [x] agregar a la factura no actualiza precio ni combobox de abajo
+2 [x] no rescata cantidad el combobox de tipo de articulo de abajo
+3 [x] agregar boton nueva factura que setee en blanco todo incluido combobox excepto combobox clientes combobox items
+4 [] agregar combo de facturas propias del cliente
+5 [x] cantidad tiene un control de si es digito, aun no funciona con float
+6 [x] como por punto resuelto
+7 [x] comas resuelto y tipo en precio tb

@@ -1,3 +1,4 @@
+from curses.ascii import isdigit
 import sys, shelve,  datetime
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import *
@@ -11,6 +12,7 @@ class programa(QMainWindow, Ui_albaran):
     total_items = []
     total_clientes = []
     #aclientes = []
+    
     
     def __init__(self, parent = None ):
         QWidget.__init__(self, parent)
@@ -106,19 +108,43 @@ class programa(QMainWindow, Ui_albaran):
         # # Actualizar combobox cliente:
         self.updateComboC("") # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.boxclient.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
+        
+        
 
     def agregarItem(self): #Esta funcion crea un objeto item, comprueba si esta en el array y si no esta lo anade y devuelve el array de items FUNCIONANDO
-        item1 = item(self.newti.text(), self.precio_item.text())
-        # w:
         
-        item_db = shelve.open("items.db")
-        item_db[str(item1.getTipo())] = item1
+        # esto comprobamos si tiene coma y la convertimos a punto:
+        if  "," in str(self.precio_item.text()):
+            nprec = str(self.precio_item.text())
+            nprec = nprec.replace(",", ".")
+            self.precio_item.setText(nprec)
+        # comprobamos si el resultado es un int o un float, sino tiramos error:
         
-        item_db.close()
-        #actualizamos combobox cliente: 
-        self.updateComboI(item1.getTipo())
+        chequeo = self.precio_item.text()
         
-         
+        try:
+            int(chequeo)
+            valido = True
+        except ValueError:
+            try:
+                float(chequeo)
+                valido = True
+            except ValueError:
+                print "El numero no es un valor numerico"
+                valido = False
+
+        if valido: 
+
+            item1 = item(self.newti.text(), self.precio_item.text())
+           
+            #w:
+            item_db = shelve.open("items.db")
+            item_db[str(item1.getTipo())] = item1
+            
+            item_db.close()
+            #actualizamos combobox cliente: 
+            self.updateComboI(item1.getTipo())
+        
 
     def loadItem(self): 
         
@@ -153,7 +179,6 @@ class programa(QMainWindow, Ui_albaran):
                 item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()))
             else: # sino creo el objeto con su cantidad dada por el user
                 item1 = item( str(self.boxitems.currentText()),str(self.precio_item.text()),str(self.cantidad.text()) )
-            #print item1.getCantidad() # son trazas
             
             # comprobacion para que no se repitan items:
             if not self.total_items: 
@@ -171,33 +196,30 @@ class programa(QMainWindow, Ui_albaran):
                 if not existe:
                     self.total_items.append(item1)
                 else:
-                    self.total_items[indice-1].setCantidad(self.cantidad.text()) # aprovechamos el indice para usar y sacaar el id del ultimo elemento valido. El -1 es por que se ha iterado una vez de mas.
+                    if not self.cantidad.text():
+                        self.cantidad.setText(str(item1.getCantidad()))
+                    else:
+                        self.total_items[indice-1].setCantidad(self.cantidad.text()) # aprovechamos el indice para usar y sacaar el id del ultimo elemento valido. El -1 es por que se ha iterado una vez de mas.
             
             self.cantidad_ro.setText(str(item1.getCantidad())) # actualizamos el read only de cantidad de abajo
             self.precio_fac.setText(str(item1.getPrecio()))
             self.cantidad.setText("") #Limpio el texto de la cantidad introducida, a ver si se ve mas limpio :D
-            self.rellenoComboFacDown()
-            
-            ### en construccion ##################
-            #Falta que se actualice el combo al anadirlo con el nuevo elemento
-            print str(self.boxitems.currentText())
-            self.itemfac.addItem(self.boxitems.currentText())
-            index = self.itemfac.findText(str(self.boxitems.currentText()))# busco el nf para obtener el index
+    
+            self.itemfac.clear()
+            for i in self.total_items:
+                self.itemfac.addItem(i.getTipo())
+            index = self.itemfac.findText( str( self.boxitems.currentText() ))# busco el nf para obtener el index
             self.itemfac.setCurrentIndex(index) # seteo por index
-            ########################################
-    
-    def rellenoComboFacDown(self):
-        
-        self.itemfac.clear()
-        for i in self.total_items:
-            self.itemfac.addItem(i.getTipo())
-        
-    
+            
+            for pepe in self.total_items:
+                print pepe.getPrecio()
+                
+                  
     def loadPrecio(self):
         indice = 0
         corto = False
-        while (not corto and indice < len(self.total_items)):
-            if (self.total_items[indice].getTipo() == self.itemfac.currentText()):
+        while not corto and indice < len(self.total_items):
+            if self.total_items[indice].getTipo() == self.itemfac.currentText():
                 it = self.total_items[indice]
                 corto = True
             indice += 1
@@ -226,17 +248,17 @@ class programa(QMainWindow, Ui_albaran):
             indice += 1
         self.cantidad_ro.setText("")
         self.precio_fac.setText("")
-        self.rellenoComboFacDown()
+        
+        
+        self.itemfac.clear()
+        for i in self.total_items:
+            self.itemfac.addItem(i.getTipo())
+        self.itemfac.setCurrentIndex(-1)
         
         
     def calculo(self):
         
         f = factura(str(self.nf.text()), str(self.de3.text()),  str(self.namec.text()), str(self.nif.text()), str(self.poblacion.text()),  str(self.calle.text()), str(self.pago.text()), self.total_items)
-        for i in self.total_items: #reemplazar los "," por "." para la operacion NO FUNCIONA
-            if  "," in i.getPrecio():
-                nprec = i.getPrecio()
-                nprec.replace(",", ".")
-                i.setPrecio(nprec)
         
         if (not self.iva.text()): #Si esta vacio le decimos que coja el iva por defecto del constructor factura.
             self.iva.setText(str(f.getIva()))
@@ -258,6 +280,8 @@ class programa(QMainWindow, Ui_albaran):
         self.calle.setText("")
         self.nf.setText("")
         self.pago.setText("")
+        self.cantidad_ro.setText("")
+        self.precio_fac.setText("")
         self.total_items = []
         self.importe.setText("")
         self.iva.setText("")
@@ -288,7 +312,7 @@ class programa(QMainWindow, Ui_albaran):
         self.boxfacs.addItems(sorted(facturas_db.keys())) # rellenamos con todos los clientes
         index = self.boxfacs.findText(str(nf))# busco el nf para obtener el index
         self.boxfacs.setCurrentIndex(index) # seteo por index
-        facturas_db.close() # cerramos
+        facturas_db.close() # cerramos py
     
     def loadFactura(self):
         facturas_db = shelve.open("facturas.db") # abrimos bases de datos en el caso de que exist
@@ -301,13 +325,18 @@ class programa(QMainWindow, Ui_albaran):
         self.calle.setText(f.getCallec())
         self.pago.setText(f.getPago())
         self.total_items = f.getVolcado()
-        self.rellenoComboFacDown()
         self.itemfac.setCurrentIndex(-1)
         self.importe.setText(f.getImporte())
         self.iva.setText(f.getIva())
-        self.iva_a.setText(f.getIva())
+        self.iva_a.setText(f.getIvaApli())
         self.total.setText(f.getTotal())
         
+        self.itemfac.clear()
+        for i in self.total_items:
+            self.itemfac.addItem(i.getTipo())
+        index = self.itemfac.findText( str( self.boxitems.currentText() ))# busco el nf para obtener el index
+        self.itemfac.setCurrentIndex(index) # seteo por index
+    
         facturas_db.close()
         
     def eliminarFactura(self):
@@ -319,19 +348,6 @@ class programa(QMainWindow, Ui_albaran):
         except: 
             print "No existe la Factura a eliminar"
         
-        self.nf.setText("")
-        self.de3.setText("")
-        self.namec.setText("")
-        self.nif.setText("")
-        self.poblacion.setText("")
-        self.calle.setText("")
-        self.pago.setText("")
-        self.total_items = []
-        self.importe.setText("")
-        self.iva.setText("")
-        self.iva_a.setText("")
-        self.total.setText("")
-
         facturas_db.close()
 
         #Desplegable facturas
@@ -343,7 +359,8 @@ class programa(QMainWindow, Ui_albaran):
         
         self.itemfac.clear() # como no le pasamos nada y no lo guardamos ese "nada" en ninguna base de datos pues entonces no importa
         self.itemfac.setCurrentIndex(-1) #<-- poner el combobox por default en blanco
-
+        
+        self.nuevaFactura()
         
 
 #MAIN
@@ -353,4 +370,3 @@ if __name__ == "__main__":
         window = programa()
         window.show()
         sys.exit(app.exec_())
-
